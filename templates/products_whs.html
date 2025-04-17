@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 목록</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 30px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .product-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            color: #3a7bd5;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .product-seller {
+            font-size: 0.9em;
+            color: #777;
+        }
+
+        .top-link {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .top-link a {
+            text-decoration: none;
+            color: #3a7bd5;
+            font-weight: bold;
+        }
+
+        .top-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-link">
+        <a href="/upload">+ 새 상품 등록</a>
+    </div>
+
+    <h2>중고 상품 목록</h2>
+    <div class="container">
+        {% for item in items %}
+        <div class="product-card">
+            <div class="product-title">{{ item[1] }}</div>
+            <div class="product-price">{{ item[2] }}원</div>
+            <div class="product-seller">판매자: {{ item[3] }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
+

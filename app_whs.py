@@ -9,11 +9,24 @@ app.secret_key = os.urandom(24)
 def init_db():
     conn = sqlite3.connect('users.db')
     c = conn.cursor()
+
+    #users 테이블
     c.execute('''
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             username TEXT UNIQUE NOT NULL,
             password TEXT NOT NULL
+        )
+    ''')
+    
+    #products 테이블
+    c.execute('''
+        CREATE TABLE IF NOT EXISTS products (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL,
+            description TEXT,
+            price INTEGER,
+            seller TEXT
         )
     ''')
     conn.commit()
@@ -66,6 +79,40 @@ def login():
 
     return render_template('login_whs.html')
 
+#상품 등록
+@app.route('/upload', methods=['GET', 'POST'])
+def upload():
+    if 'username' not in session:
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        title = request.form['title']
+        description = request.form['description']
+        price = request.form['price']
+        seller = session['username']
+
+        conn = sqlite3.connect('users.db')
+        c = conn.cursor()
+        c.execute("INSERT INTO products (title, description, price, seller) VALUES (?, ?, ?, ?)",
+                  (title, description, price, seller))
+        conn.commit()
+        conn.close()
+
+        return redirect(url_for('products'))
+
+    return render_template('upload_whs.html')
+
+#상품 목록 조회
+@app.route('/products')
+def products():
+    conn = sqlite3.connect('users.db')
+    c = conn.cursor()
+    c.execute("SELECT id, title, price, seller FROM products ORDER BY id DESC")
+    items = c.fetchall()
+    conn.close()
+
+    return render_template('products_whs.html', items=items)
+
 @app.route('/logout')
 def logout():
     session.pop('username', None)
@@ -73,4 +120,6 @@ def logout():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
 

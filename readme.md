@@ -54,3 +54,21 @@ ngrok http 5000
 - 세션 초기화
 
 
+## 상품 등록 / 조회 기능
+### 기능 설명
+- 로그인한 사용자만 상품 등록 가능
+- 등록한 상품은 전체 상품 목록에서 확인 가능
+
+### 라우팅 경로
+- '/upoad' : 상품 등록 폼
+- '/products' : 상품 목록 확인
+
+### 현재 데이터 저장 구조 (SQLite)
+```sql
+CREATE TABLE products (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT,
+    description TEXT,
+    price INTEGER,
+    seller TEXT
+);
