@@ -227,8 +227,35 @@ def upload():
 
     return render_template('upload_whs.html')
 
+#유저 상품 삭제
+@app.route('/delete_product/<int:product_id>', methods=['POST'])
+def delete_product_by_user(product_id):
+    if 'username' not in session:
+        return redirect(url_for('login'))
 
+    username = session['username']
+    conn = sqlite3.connect('users.db')
+    c = conn.cursor()
 
+    # 관리자인지 일반 사용자인지 확인
+    if username == 'admin':
+        # 관리자라면 상품 삭제
+        c.execute("DELETE FROM products WHERE id = ?", (product_id,))
+    else:
+        # 일반 사용자라면 본인이 등록한 상품만 삭제
+        c.execute("SELECT seller FROM products WHERE id = ?", (product_id,))
+        product = c.fetchone()
+
+        if product and product[0] == username:
+            # 본인이 등록한 상품만 삭제 가능
+            c.execute("DELETE FROM products WHERE id = ?", (product_id,))
+        else:
+            return "삭제 권한이 없습니다.", 403
+
+    conn.commit()
+    conn.close()
+
+    return redirect(url_for('products'))  # 상품 목록으로 리다이렉트
 
 
 
