@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>프로필</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .profile-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .profile-header h3 {
+            font-weight: bold;
+            font-size: 24px;
+        }
+        .profile-header p {
+            font-size: 16px;
+            color: #777;
+        }
+        .bio-section {
+            margin-bottom: 30px;
+        }
+        .bio-section h4 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .bio-section p {
+            font-size: 16px;
+            color: #555;
+            padding: 12px;
+            background-color: #f7f7f7;
+            border-radius: 6px;
+        }
+        .bio-section form {
+            display: flex;
+            flex-direction: column;
+        }
+        .bio-section textarea {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .bio-section button {
+            padding: 12px;
+            background-color: #3a7bd5;
+            color: white;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .bio-section button:hover {
+            background-color: #2f64b0;
+        }
+        .action-links {
+            text-align: center;
+        }
+        .action-links a {
+            color: #3a7bd5;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .action-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 프로필 헤더 -->
+        <div class="profile-header">
+            <h3>{{ username }}님의 프로필</h3>
+            <p>사용자 정보 및 소개글을 확인하고 수정할 수 있습니다.</p>
+        </div>
+
+        <!-- 소개글 섹션 -->
+        <div class="bio-section">
+            <h4>소개글</h4>
+            <p>{{ user_bio if user_bio else "소개글이 없습니다." }}</p>
+
+            {% if username == session['username'] %}
+                <!-- 로그인한 사용자의 프로필에서만 수정 폼 표시 -->
+                <form method="POST" action="/mypage">
+                    <label for="bio">소개글 수정</label>
+                    <textarea id="bio" name="bio" rows="4" placeholder="새로운 소개글을 작성하세요.">{{ user_bio }}</textarea>
+                    <button type="submit">소개글 저장</button>
+                </form>
+            {% endif %}
+        </div>
+
+        <!-- 비밀번호 변경 링크 -->
+        {% if username == session['username'] %}
+            <div class="action-links">
+                <a href="/update_password">비밀번호 변경</a>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
+

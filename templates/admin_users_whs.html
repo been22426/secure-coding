@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>관리자 유저 관리</title>
+    <title>🔐 관리자 유저 관리</title>
     <style>
         body {
             font-family: 'Segoe UI', sans-serif;
@@ -49,6 +49,12 @@
         .btn:hover {
             background-color: #d35400;
         }
+        .btn-secondary {
+            background-color: #2ecc71;
+        }
+        .btn-secondary:hover {
+            background-color: #27ae60;
+        }
     </style>
 </head>
 <body>
@@ -73,7 +79,9 @@
                             <button type="submit" class="btn" onclick="return confirm('정말 정지시키겠습니까?')">정지</button>
                         </form>
                         {% else %}
-                        -
+                        <form method="POST" action="/admin/reactivate_user/{{ user[0] }}" style="display:inline;">
+                            <button type="submit" class="btn btn-secondary" onclick="return confirm('회사성화 하시겠습니까?')">회사성화</button>
+                        </form>
                         {% endif %}
                     </td>
                 </tr>

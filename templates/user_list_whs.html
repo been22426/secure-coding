@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>전체 사용자 목록</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            padding: 40px;
+            background: #f2f2f2;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #3a7bd5;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f0f0f0;
+        }
+        a {
+            text-decoration: none;
+            color: #3a7bd5;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .status {
+            font-weight: bold;
+        }
+        .status.active {
+            color: #2ecc71;
+        }
+        .status.inactive {
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>👥 전체 사용자 목록</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>사용자 이름</th>
+                    <th>상태</th>
+                    <th>프로필</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user[0] }}</td>
+                    <td>
+                        <span class="status {% if user[1] == 1 %}active{% else %}inactive{% endif %}">
+                            {% if user[1] == 1 %}활성화 사용자{% else %}정지된 사용자{% endif %}
+                        </span>
+                    </td>
+                    <td><a href="/user/{{ user[0] }}">프로필 보기</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
