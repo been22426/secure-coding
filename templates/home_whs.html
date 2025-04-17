@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<title>홈</title>
+<style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: white;
+            padding: 30px 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .button {
+            display: block;
+            margin: 15px 0;
+            padding: 12px 20px;
+            width: 200px;
+            border: none;
+            border-radius: 8px;
+            background-color: #3a7bd5;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .button:hover {
+            background-color: #2e5cb8;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h2>👋 {{ username }}님, 환영합니다!</h2>
+<a class="button" href="{{ url_for('products') }}">상품 목록</a>
+<a class="button" href="{{ url_for('mypage') }}">마이페이지</a>
+<a class="button" href="{{ url_for('chat') }}">실시간 채팅</a>
+<a class="button" href="{{ url_for('logout') }}">로그아웃</a>
+<div class="home-actions" style="margin-top: 30px;">
+<form action="/users" method="GET">
+<button class="button" type="submit">👥 사용자 목록</button>
+</form>
+
+<form action="/transfer" method="GET">
+<button class="button" type="submit">💸 송금하기</button>
+</form>
+</div>
+</div>
+</body>
+</html>

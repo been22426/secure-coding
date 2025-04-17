@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>{{ product[1] }} - 상품 상세</title>
-    <style>
+<meta charset="utf-8"/>
+<title>{{ product[1] }} - 상품 상세</title>
+<style>
         body {
             font-family: 'Segoe UI', sans-serif;
             background-color: #f5f5f5;
@@ -52,28 +53,25 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>{{ product[1] }}</h2>
-        <div class="price">{{ product[3] }}원</div>
-        <div class="description">{{ product[2] }}</div>
-        <div class="meta">판매자: {{ product[4] }}</div>
-	
-	<!-- 유저 신고 폼 -->
-	<form method="POST" action="/report/user/{{ product[4] }}">
-    	<label for="reason">판매자 신고 사유:</label><br>
-    	<textarea name="reason" required></textarea><br>
-    	<input type="submit" value="판매자 신고하기">
-	</form>
+<div class="container">
+<h2>{{ product[1] }}</h2>
+<div class="price">{{ product[3] }}원</div>
+<div class="description">{{ product[2] }}</div>
+<div class="meta">판매자: {{ product[4] }}</div>
+<!-- 유저 신고 폼 -->
+<form action="/report/user/{{ product[4] }}" method="POST"><input name="csrf_token" type="hidden" value="{{ csrf_token() }}"/>
+<label for="reason">판매자 신고 사유:</label><br/>
+<textarea maxlength="300" name="reason" placeholder="내용을 입력하세요 (최대 300자)" required=""></textarea><br/>
+<input type="submit" value="판매자 신고하기"/>
+</form>
 
-	<!--상품 신고 폼--!>
-	<form method="POST" action="/report/product/{{ product[0] }}">
-    		<label for="reason">신고 사유:</label><br>
-    		<textarea name="reason" required></textarea><br>
-    		<input type="submit" value="신고하기">
-	</form>
-
-        <a href="/products">← 상품 목록으로 돌아가기</a>
-    </div>
+	&lt;!--상품 신고 폼--!&gt;
+	<form action="/report/product/{{ product[0] }}" method="POST"><input name="csrf_token" type="hidden" value="{{ csrf_token() }}"/>
+<label for="reason">신고 사유:</label><br/>
+<textarea maxlength="300" name="reason" placeholder="내용을 입력하세요 (최대 300자)" required=""></textarea><br/>
+<input type="submit" value="신고하기"/>
+</form>
+<a href="/products">← 상품 목록으로 돌아가기</a>
+</div>
 </body>
 </html>
-

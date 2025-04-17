@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>전체 채팅방</title>
-    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
-    <style>
+<meta charset="utf-8"/>
+<title>전체 채팅방</title>
+<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+<style>
         body {
             font-family: 'Segoe UI', sans-serif;
             background-color: #f2f2f2;
@@ -52,14 +53,14 @@
     </style>
 </head>
 <body>
-    <h2 style="text-align:center;">전체 채팅</h2>
-    <div id="chat-box"></div>
-    <div id="message-input">
-        <input type="text" id="message" placeholder="메시지를 입력하세요">
-        <button onclick="sendMessage()">보내기</button>
-    </div>
+<h2 style="text-align:center;">전체 채팅</h2>
+<div id="chat-box"></div>
+<div id="message-input">
+<input id="message" placeholder="메시지를 입력하세요" type="text"/>
+<button onclick="sendMessage()">보내기</button>
+</div>
+<script>// ⚠️ 서버 측에서는 반드시 로그인 사용자만 메시지 전송 가능하도록 검증해야 합니다.
 
-    <script>
         const socket = io();
         const username = "{{ username }}";
 
@@ -86,4 +87,3 @@
     </script>
 </body>
 </html>
-

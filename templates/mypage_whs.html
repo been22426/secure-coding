@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>마이페이지</title>
-    <style>
+<meta charset="utf-8"/>
+<title>마이페이지</title>
+<style>
         body {
             font-family: 'Segoe UI', sans-serif;
             padding: 40px;
@@ -52,29 +53,40 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>🙋‍♂️ 마이페이지</h2>
-
-        <!-- 소개글 수정 폼 -->
-        <form method="POST" action="/mypage">
-            <label for="bio">소개글 수정</label>
-            <textarea id="bio" name="bio" rows="4">{{ user_bio }}</textarea>
-            <button type="submit">소개글 저장</button>
-        </form>
-
-        <hr style="margin: 30px 0;">
-
-        <!-- 비밀번호 변경 폼 -->
-        <form method="POST" action="/update_password">
-            <label for="current_pw">현재 비밀번호</label>
-            <input type="password" name="current_pw" required>
-
-            <label for="new_pw">새 비밀번호</label>
-            <input type="password" name="new_pw" required>
-
-            <button type="submit">비밀번호 변경</button>
-        </form>
+<div class="container">
+<h2>🙋‍♂️ 마이페이지</h2>
+<!-- 소개글 수정 폼 -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flashes">
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+      {% endfor %}
     </div>
+  {% endif %}
+{% endwith %}
+
+<style>
+  .flashes { margin-bottom: 20px; }
+  .flash { padding: 10px; border-radius: 6px; margin-bottom: 10px; font-weight: bold; }
+  .flash.error { background-color: #f8d7da; color: #721c24; }
+  .flash.success { background-color: #d4edda; color: #155724; }
+</style><form action="/mypage" method="POST">
+        {{ form.hidden_tag() }}
+        <label for="bio">소개글 수정</label>
+        {{ form.bio(rows=4) }}
+        {{ form.submit }}
+    </form>
+<hr style="margin: 30px 0;"/>
+<!-- 비밀번호 변경 폼 -->
+<form action="/update_password" method="POST">
+        {{ pwform.hidden_tag() }}
+        <label for="current_pw">현재 비밀번호</label>
+        {{ pwform.current_pw }}
+        <label for="new_pw">새 비밀번호</label>
+        {{ pwform.new_pw }}
+        {{ pwform.submit }}
+    </form>
+</div>
 </body>
 </html>
-

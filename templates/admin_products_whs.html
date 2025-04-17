@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>관리자 품합 관리</title>
-    <style>
+<meta charset="utf-8"/>
+<title>관리자 품합 관리</title>
+<style>
         body {
             font-family: 'Segoe UI', sans-serif;
             background-color: #f5f5f5;
@@ -52,33 +53,33 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>📄 관리자 품합 관리</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>제목</th>
-                    <th>가격</th>
-                    <th>팔림자</th>
-                    <th>작업</th>
-                </tr>
-            </thead>
-            <tbody>
+<div class="container">
+<h2>📄 관리자 품합 관리</h2>
+<table>
+<thead>
+<tr>
+<th>제목</th>
+<th>가격</th>
+<th>팔림자</th>
+<th>작업</th>
+</tr>
+</thead>
+<tbody>
                 {% for item in items %}
                 <tr>
-                    <td>{{ item[1] }}</td>
-                    <td>{{ item[2] }}원</td>
-                    <td>{{ item[3] }}</td>
-                    <td>
-                        <form action="/admin/delete_product/{{ item[0] }}" method="POST" style="display:inline;">
-                            <button type="submit" class="btn" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</button>
-                        </form>
-                    </td>
-                </tr>
+<td>{{ item[1] }}</td>
+<td>{{ item[2] }}원</td>
+<td>{{ item[3] }}</td>
+<td>
+<form action="/admin/delete_product/{{ item[0] }}" method="POST" style="display:inline;">
+            {{ product_form.hidden_tag() }}
+            {{ product_form.submit(value="삭제", class_="btn", onclick="return confirm('정말 삭제하시겠습니까?')" ) }}
+        </form>
+</td>
+</tr>
                 {% endfor %}
             </tbody>
-        </table>
-    </div>
+</table>
+</div>
 </body>
 </html>
-

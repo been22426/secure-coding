@@ -134,7 +134,8 @@
 
     <!-- 검색창 -->
     <div class="search-bar">
-        <form action="/products_search" method="GET">
+        <form action="/products_search" method="GET"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
             <input type="text" name="query" placeholder="상품 검색..." required>
             <button type="submit">검색</button>
         </form>
@@ -153,7 +154,8 @@
 
             {% if item[3] == session['username'] or session['username'] == 'admin' %}
                 <!-- 삭제 버튼: 본인 상품 또는 관리자는 삭제 가능 -->
-                <form action="/delete_product/{{ item[0] }}" method="POST" style="display:inline;">
+                <form action="/delete_product/{{ item[0] }}" method="POST" style="display:inline;"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
                     <button type="submit" class="btn" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</button>
                 </form>
             {% endif %}

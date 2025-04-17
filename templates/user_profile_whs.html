@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>프로필</title>
-    <style>
+<meta charset="utf-8"/>
+<title>프로필</title>
+<style>
         body {
             font-family: 'Segoe UI', sans-serif;
             margin: 0;
@@ -86,35 +87,35 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- 프로필 헤더 -->
-        <div class="profile-header">
-            <h3>{{ username }}님의 프로필</h3>
-            <p>사용자 정보 및 소개글을 확인하고 수정할 수 있습니다.</p>
-        </div>
-
-        <!-- 소개글 섹션 -->
-        <div class="bio-section">
-            <h4>소개글</h4>
-            <p>{{ user_bio if user_bio else "소개글이 없습니다." }}</p>
+<div class="container">
+<!-- 프로필 헤더 -->
+<div class="profile-header">
+<h3>{{ username }}님의 프로필</h3>
+<p>사용자 정보 및 소개글을 확인하고 수정할 수 있습니다.</p>
+</div>
+<!-- 소개글 섹션 -->
+<div class="bio-section">
+<h4>소개글</h4>
+<p>{{ user_bio if user_bio else "소개글이 없습니다." }}</p>
 
             {% if username == session['username'] %}
                 <!-- 로그인한 사용자의 프로필에서만 수정 폼 표시 -->
-                <form method="POST" action="/mypage">
-                    <label for="bio">소개글 수정</label>
-                    <textarea id="bio" name="bio" rows="4" placeholder="새로운 소개글을 작성하세요.">{{ user_bio }}</textarea>
-                    <button type="submit">소개글 저장</button>
-                </form>
+<form method="POST">
+{{ form.hidden_tag() }}
+<label for="bio">소개글 수정</label>
+{{ form.bio(rows=4) }}
+{{ form.submit }}
+<textarea id="bio" name="bio" placeholder="새로운 소개글을 작성하세요." rows="4">{{ user_bio }}</textarea>
+<button type="submit">소개글 저장</button>
+</form>
             {% endif %}
         </div>
-
-        <!-- 비밀번호 변경 링크 -->
+<!-- 비밀번호 변경 링크 -->
         {% if username == session['username'] %}
             <div class="action-links">
-                <a href="/update_password">비밀번호 변경</a>
-            </div>
+<a href="/update_password">비밀번호 변경</a>
+</div>
         {% endif %}
     </div>
 </body>
 </html>
-

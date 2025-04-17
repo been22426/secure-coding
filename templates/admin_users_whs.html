@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>🔐 관리자 유저 관리</title>
-    <style>
+<meta charset="utf-8"/>
+<title>🔐 관리자 유저 관리</title>
+<style>
         body {
             font-family: 'Segoe UI', sans-serif;
             background-color: #f5f5f5;
@@ -58,37 +59,38 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>🔐 관리자 유저 관리</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>유저 이름</th>
-                    <th>현재 상태</th>
-                    <th>작업</th>
-                </tr>
-            </thead>
-            <tbody>
+<div class="container">
+<h2>🔐 관리자 유저 관리</h2>
+<table>
+<thead>
+<tr>
+<th>유저 이름</th>
+<th>현재 상태</th>
+<th>작업</th>
+</tr>
+</thead>
+<tbody>
                 {% for user in users %}
                 <tr>
-                    <td>{{ user[0] }}</td>
-                    <td>{% if user[1] == 0 %}정지됨{% else %}활성{% endif %}</td>
-                    <td>
+<td>{{ user[0] }}</td>
+<td>{% if user[1] == 0 %}정지됨{% else %}활성{% endif %}</td>
+<td>
                         {% if user[1] == 1 %}
-                        <form method="POST" action="/admin/deactivate_user/{{ user[0] }}" style="display:inline;">
-                            <button type="submit" class="btn" onclick="return confirm('정말 정지시키겠습니까?')">정지</button>
-                        </form>
+                        <form action="/admin/deactivate_user/{{ user[0] }}" method="POST" style="display:inline;">
+        {{ action_form.hidden_tag() }}
+        {{ action_form.submit(value="정지", class_="btn", onclick="return confirm('정말 정지시키겠습니까?')" ) }}
+    </form>
                         {% else %}
-                        <form method="POST" action="/admin/reactivate_user/{{ user[0] }}" style="display:inline;">
-                            <button type="submit" class="btn btn-secondary" onclick="return confirm('회사성화 하시겠습니까?')">회사성화</button>
-                        </form>
+                        <form action="/admin/reactivate_user/{{ user[0] }}" method="POST" style="display:inline;">
+        {{ action_form.hidden_tag() }}
+        {{ action_form.submit(value="재활성화", class_="btn btn-secondary", onclick="return confirm('정말 재활성화 하시겠습니까?')" ) }}
+    </form>
                         {% endif %}
                     </td>
-                </tr>
+</tr>
                 {% endfor %}
             </tbody>
-        </table>
-    </div>
+</table>
+</div>
 </body>
 </html>
-

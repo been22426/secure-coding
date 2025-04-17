@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>감사 로그 뷰어</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 30px; background: #f8f8f8; }
+        h2 { color: #333; }
+        table { border-collapse: collapse; width: 100%; background: #fff; }
+        th, td { padding: 10px; border-bottom: 1px solid #ccc; text-align: left; }
+        tr:hover { background-color: #f1f1f1; }
+        .log-container { max-height: 600px; overflow-y: auto; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <h2>🕵️ 관리자 감사 로그</h2>
+    <div class="log-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>시간</th>
+                    <th>관리자</th>
+                    <th>행위</th>
+                    <th>대상</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for line in logs %}
+                {% set parts = line.strip().split(' ', 3) %}
+                <tr>
+                    <td>{{ parts[0] }} {{ parts[1] }}</td>
+                    <td>{{ parts[3].split('->')[0].strip('[]') }}</td>
+                    <td>{{ parts[3].split('->')[1].split(':')[0].strip() }}</td>
+                    <td>{{ parts[3].split(':')[1].strip() }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

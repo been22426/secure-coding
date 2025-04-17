@@ -40,7 +40,8 @@
 <body>
     <div class="container">
         <h2>송금</h2>
-        <form method="POST" action="/transfer">
+        <form method="POST" action="/transfer"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
             <label for="receiver">받는 사람:</label>
             <input type="text" id="receiver" name="receiver" required>
 

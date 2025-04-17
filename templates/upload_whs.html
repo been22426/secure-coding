@@ -6,100 +6,71 @@
     <style>
         body {
             font-family: 'Segoe UI', sans-serif;
-            background-color: #f5f5f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 40px;
         }
-
-        .form-container {
-            background-color: white;
-            padding: 30px 40px;
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
             border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 500px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
-
         h2 {
             text-align: center;
-            margin-bottom: 25px;
-            color: #333;
+            margin-bottom: 24px;
+            color: #343a40;
         }
-
         label {
-            display: block;
-            margin-bottom: 8px;
             font-weight: bold;
+            margin-top: 12px;
+            display: block;
         }
-
         input[type="text"],
         input[type="number"],
         textarea {
             width: 100%;
             padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            box-sizing: border-box;
+            margin-top: 4px;
+            margin-bottom: 16px;
+            border-radius: 6px;
+            border: 1px solid #ced4da;
+            font-size: 16px;
         }
-
-        textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        input[type="submit"] {
+        button {
             width: 100%;
-            background-color: #3a7bd5;
-            color: white;
             padding: 12px;
+            background-color: #007bff;
+            color: white;
             border: none;
-            border-radius: 8px;
-            font-weight: bold;
+            border-radius: 6px;
+            font-size: 16px;
             cursor: pointer;
-            transition: background-color 0.2s ease;
         }
-
-        input[type="submit"]:hover {
-            background-color: #2f64b0;
-        }
-
-        .back-link {
-            text-align: center;
-            margin-top: 15px;
-        }
-
-        .back-link a {
-            color: #3a7bd5;
-            text-decoration: none;
-        }
-
-        .back-link a:hover {
-            text-decoration: underline;
+        button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-    <div class="form-container">
-        <h2>상품 등록</h2>
-        <form method="POST">
+    <div class="container">
+        <h2>📦 상품 등록</h2>
+        <form method="POST" action="/upload">
+            {{ form.hidden_tag() }}
+
             <label for="title">상품명</label>
-            <input type="text" name="title" required>
+            {{ form.title(size=50) }}
 
-            <label for="description">상품 설명</label>
-            <textarea name="description" required></textarea>
+            <label for="description">설명</label>
+            {{ form.description(rows=4, cols=50) }}
 
-            <label for="price">가격 (원)</label>
-            <input type="number" name="price" required>
+            <label for="price">가격</label>
+            {{ form.price() }}
 
-            <input type="submit" value="등록하기">
+            {{ form.submit(class_="btn btn-primary") }}
         </form>
-        <div class="back-link">
-            <a href="/products">← 상품 목록으로 돌아가기</a>
-        </div>
     </div>
 </body>
 </html>
-

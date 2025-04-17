@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>품합 신고 내역</title>
-    <style>
+<meta charset="utf-8"/>
+<title>품합 신고 내역</title>
+<style>
         body {
             font-family: 'Segoe UI', sans-serif;
             background-color: #f5f5f5;
@@ -41,30 +42,28 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>📢 품합 신고 내역</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>품합 ID</th>
-                    <th>신고자</th>
-                    <th>사유</th>
-                    <th>시간</th>
-                </tr>
-            </thead>
-            <tbody>
+<div class="container">
+<h2>📢 품합 신고 내역</h2>
+<table>
+<thead>
+<tr>
+<th>품합 ID</th>
+<th>신고자</th>
+<th>사유</th>
+<th>시간</th>
+</tr>
+</thead>
+<tbody>
                 {% for report in reports %}
                 <tr>
-                    <td>{{ report[0] }}</td>
-                    <td>{{ report[1] }}</td>
-                    <td>{{ report[2] }}</td>
-                    <td>{{ report[3] }}</td>
-                </tr>
+<td>{{ report[0] }}</td>
+<td>{{ report[1] }}</td>
+<td>{{ report[2] }}</td>
+<td>{{ report[3] }}</td>
+</tr>
                 {% endfor %}
             </tbody>
-        </table>
-    </div>
+</table>
+</div>
 </body>
 </html>
-
-
