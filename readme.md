@@ -94,7 +94,7 @@ Flask 기반의 보안 중심 중고거래 웹 플랫폼입니다.
   ```sql
   SELECT * FROM products WHERE title LIKE '%search_term%' OR description LIKE '%search_term%'
   ```
-### 6. 유저 간 송금 기능
+###  유저 간 송금 기능
 - 사용자는 다른 사용자에게 **포인트 송금** 기능을 사용할 수 있습니다.
 - 송금 시 **송금액**과 **수수료** 등을 입력받고, **계좌 간 거래**가 이루어집니다.
 - 송금 내역은 **`transactions`** 테이블에 기록되고, 사용자는 **송금 내역 페이지**에서 확인할 수 있습니다.
@@ -147,7 +147,7 @@ cd secure-coding
 conda activate secure_coding
 python app_whs.py
 ---
-
+```
 ## 개발 전 과정 요약
 
 ###  1. 요구사항 분석
