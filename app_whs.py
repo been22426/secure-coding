@@ -1,9 +1,11 @@
 from flask import Flask, render_template, request, redirect, session, url_for
+from flask_socketio import SocketIO, emit, join_room, leave_room
 import sqlite3
 import os
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
+socketio = SocketIO(app)
 
 # DB 초기화
 def init_db():
@@ -128,6 +130,41 @@ def product_detail(product_id):
 
     return render_template('view_product_whs.html', product=product)
 
+#실시간 전체 채팅
+@app.route('/chat')
+def chat():
+    if 'username' not in session:
+        return redirect(url_for('login'))
+    return render_template('chat_whs.html', username=session['username'])
+
+
+#SocketIO 이벤트 처리
+@socketio.on('send_message')
+def handle_send_message(data):
+    username = data['username']
+    message = data['message']
+    emit('receive_message', {'username': username, 'message': message}, broadcast=True)
+
+# 1 대 1 채팅
+@app.route('/chat/<target>')
+def private_chat(target):
+    if 'username' not in session:
+        return redirect(url_for('login'))
+    return render_template('private_chat_whs.html', myname=session['username'], target=target)
+
+#SocketIO 이벤트 추가
+@socketio.on('join_room')
+def handle_join(data):
+    room = data['room']
+    join_room(data['room'])
+
+
+@socketio.on('private_message')
+def handle_private_message(data):
+    room = data['room']
+    sender = data['sender']
+    message = data['message']
+    emit('receive_private', {'sender': sender, 'message': message}, to=room)
 
 
 @app.route('/logout')
@@ -136,7 +173,8 @@ def logout():
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    socketio.run(app, debug=True)
+
 
 
 
