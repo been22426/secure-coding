@@ -80,7 +80,10 @@
     <div class="container">
         {% for item in items %}
         <div class="product-card">
-            <div class="product-title">{{ item[1] }}</div>
+            <div class="product-title">
+	      <a href="/product/{{ item[0] }}">{{ item[1] }}</a>
+            </div>
+
             <div class="product-price">{{ item[2] }}원</div>
             <div class="product-seller">판매자: {{ item[3] }}</div>
         </div>

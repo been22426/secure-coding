@@ -113,6 +113,23 @@ def products():
 
     return render_template('products_whs.html', items=items)
 
+
+#상품 상세 페이지 
+@app.route('/product/<int:product_id>')
+def product_detail(product_id):
+    conn = sqlite3.connect('users.db')
+    c = conn.cursor()
+    c.execute("SELECT id, title, description, price, seller FROM products WHERE id = ?", (product_id,))
+    product = c.fetchone()
+    conn.close()
+
+    if not product:
+        return "상품을 찾을 수 없습니다.", 404
+
+    return render_template('view_product_whs.html', product=product)
+
+
+
 @app.route('/logout')
 def logout():
     session.pop('username', None)
