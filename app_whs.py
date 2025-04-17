@@ -258,22 +258,26 @@ def delete_product_by_user(product_id):
     return redirect(url_for('products'))  # 상품 목록으로 리다이렉트
 
 
+#상품 검색 및 목록
+@app.route('/products_search', methods=['GET'])
+def products_search():
+    query = request.args.get('query')  # 검색어를 받아옴
 
-
-#상품 목록 조회
-@app.route('/products')
-def products():
     conn = sqlite3.connect('users.db')
     c = conn.cursor()
-    c.execute("SELECT id, title, price, seller FROM products ORDER BY id DESC")
+
+    if query:
+        # 상품명(title) 또는 상품 설명(description)을 기준으로 검색
+        c.execute("SELECT id, title, price, seller FROM products WHERE title LIKE ? OR description LIKE ? ORDER BY id DESC", 
+                  ('%' + query + '%', '%' + query + '%'))
+    else:
+        # 검색어가 없으면 모든 상품 출력
+        c.execute("SELECT id, title, price, seller FROM products ORDER BY id DESC")
+    
     items = c.fetchall()
     conn.close()
 
     return render_template('products_whs.html', items=items)
-
-
-
-
 
 
 
@@ -356,7 +360,26 @@ def handle_private_message(data):
     emit('receive_private', {'sender': sender, 'message': message}, to=room)
 
 
+#상품 검색
+@app.route('/products', methods=['GET'])
+def products():
+    query = request.args.get('query')  # 검색어를 받아옴
 
+    conn = sqlite3.connect('users.db')
+    c = conn.cursor()
+
+    if query:
+        # 상품명(title) 또는 상품 설명(description)을 기준으로 검색
+        c.execute("SELECT id, title, price, seller FROM products WHERE title LIKE ? OR description LIKE ? ORDER BY id DESC", 
+                  ('%' + query + '%', '%' + query + '%'))
+    else:
+        # 검색어가 없다면 모든 상품 조회
+        c.execute("SELECT id, title, price, seller FROM products ORDER BY id DESC")
+    
+    items = c.fetchall()
+    conn.close()
+
+    return render_template('products_whs.html', items=items)
 
 
 
