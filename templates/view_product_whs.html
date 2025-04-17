@@ -57,6 +57,21 @@
         <div class="price">{{ product[3] }}원</div>
         <div class="description">{{ product[2] }}</div>
         <div class="meta">판매자: {{ product[4] }}</div>
+	
+	<!-- 유저 신고 폼 -->
+	<form method="POST" action="/report/user/{{ product[4] }}">
+    	<label for="reason">판매자 신고 사유:</label><br>
+    	<textarea name="reason" required></textarea><br>
+    	<input type="submit" value="판매자 신고하기">
+	</form>
+
+	<!--상품 신고 폼--!>
+	<form method="POST" action="/report/product/{{ product[0] }}">
+    		<label for="reason">신고 사유:</label><br>
+    		<textarea name="reason" required></textarea><br>
+    		<input type="submit" value="신고하기">
+	</form>
+
         <a href="/products">← 상품 목록으로 돌아가기</a>
     </div>
 </body>
