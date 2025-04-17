@@ -298,6 +298,57 @@ def product_detail(product_id):
 
 
 
+#송금 기능
+@app.route('/transfer', methods=['GET', 'POST'])
+def transfer():
+    if 'username' not in session:
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        receiver = request.form['receiver']
+        amount = int(request.form['amount'])
+
+        # 송금자와 수신자의 잔액을 확인
+        sender = session['username']
+        conn = sqlite3.connect('users.db')
+        c = conn.cursor()
+
+        # 송금자의 잔액을 가져옵니다
+        c.execute("SELECT balance FROM users WHERE username = ?", (sender,))
+        sender_balance = c.fetchone()[0]
+
+        if sender_balance >= amount:
+            # 송금자의 잔액이 충분한 경우
+            # 송금 후, 송금자의 잔액 차감, 수신자의 잔액 추가
+            c.execute("UPDATE users SET balance = balance - ? WHERE username = ?", (amount, sender))
+            c.execute("UPDATE users SET balance = balance + ? WHERE username = ?", (amount, receiver))
+            c.execute("INSERT INTO transactions (sender, receiver, amount) VALUES (?, ?, ?)", (sender, receiver, amount))
+            conn.commit()
+            conn.close()
+            return redirect(url_for('transactions'))  # 송금 내역 페이지로 리다이렉트
+        else:
+            conn.close()
+            return "잔액이 부족합니다.", 400  # 잔액 부족 시 오류 메시지
+
+    return render_template('transfer_whs.html')
+
+
+#송금 내역 조회
+@app.route('/transactions')
+def transactions():
+    if 'username' not in session:
+        return redirect(url_for('login'))
+
+    username = session['username']
+    conn = sqlite3.connect('users.db')
+    c = conn.cursor()
+
+    # 송금 내역을 가져옵니다.
+    c.execute("SELECT * FROM transactions WHERE sender = ? OR receiver = ? ORDER BY date DESC", (username, username))
+    transactions = c.fetchall()
+    conn.close()
+
+    return render_template('transactions_whs.html', transactions=transactions)
 
 
 
